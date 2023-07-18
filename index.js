@@ -3,6 +3,7 @@
 import express from "express";
 import mongoose from "mongoose";
 import bodyParser from "body-parser";
+import methodOverride from "method-override"
 mongoose.set('strictQuery',true)
 mongoose.connect('mongodb+srv://kaustubsreekrishnan:V2yq3HekShhZENra@cluster0.ls3rywz.mongodb.net/?retryWrites=true&w=majority')
 
