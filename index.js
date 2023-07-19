@@ -1,9 +1,10 @@
 //jshint esversion:6
 
-import express from "express";
-import mongoose from "mongoose";
-import bodyParser from "body-parser";
+import express from "express"
+import mongoose from "mongoose"
+import bodyParser from "body-parser"
 import methodOverride from "method-override"
+import cors from 'cors'
 mongoose.set('strictQuery',true)
 mongoose.connect('mongodb+srv://kaustubsreekrishnan:V2yq3HekShhZENra@cluster0.ls3rywz.mongodb.net/?retryWrites=true&w=majority')
 
@@ -11,10 +12,11 @@ const app = express()
 
 app.use(bodyParser.urlencoded({extended:true}))
 app.use(bodyParser.json())
+app.use(cors())
 app.use(express.static("public"))
 
-const aboutContent = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
-const contactContent = ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
+// const aboutContent = 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.'
+// const contactContent = ' Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.'
 
 const postSchema = {
     title : String,
@@ -33,11 +35,11 @@ app.get('/', async (req,res) => {
     }
 })
 
-app.get('/posts',(req,res) => res.redirect('/'))
+// app.get('/posts',(req,res) => res.redirect('/'))
 
-app.get('/about',(req,res) => res.status(200).json(aboutContent))
+// app.get('/about',(req,res) => res.status(200).json(aboutContent))
 
-app.get('/contact',(req,res) => res.status(200).json(contactContent))
+// app.get('/contact',(req,res) => res.status(200).json(contactContent))
 
 app.post('/compose',(req,res) => {
     console.log(req.body)
@@ -47,8 +49,8 @@ app.post('/compose',(req,res) => {
     })
     try {
         post.save()
-        console.log(post)
-        res.redirect('/')
+        // console.log(post)
+        // res.redirect('/')
     } catch(err) {
         console.log(err)
     }
@@ -57,7 +59,9 @@ app.post('/compose',(req,res) => {
 app.get('/posts/:postID',async (req,res) => {
     const postID = req.params.postID
     try {
-        foundPost = await Post.findOne({_id : postID})
+        console.log(postID)
+        foundPost = await Post.findById(postID)
+        foundPost.save()
         // res.status(200).json(foundPost)
         console.log(foundPost)
     } catch(err) {
@@ -78,4 +82,4 @@ app.delete('/posts/:postID',async (req,res) => {
     }
 })
 
-app.listen(process.env.PORT || 3000, () => console.log(`Server running on ${process.env.PORT || 3000}`))
+app.listen(process.env.PORT || 3001, () => console.log(`Server running on ${process.env.PORT || 3001}`))
