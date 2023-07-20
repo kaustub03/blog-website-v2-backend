@@ -59,10 +59,9 @@ app.post('/compose',(req,res) => {
 app.get('/posts/:postID',async (req,res) => {
     const postID = req.params.postID
     try {
-        console.log(postID)
-        foundPost = await Post.findById(postID)
-        foundPost.save()
-        // res.status(200).json(foundPost)
+        // console.log(postID)
+        const foundPost = await Post.findOne({_id : postID})
+        res.status(200).json(foundPost)
         console.log(foundPost)
     } catch(err) {
         console.log(err)
@@ -76,7 +75,7 @@ app.delete('/posts/:postID',async (req,res) => {
     try {
         await Post.deleteOne({_id : postID})
         console.log(`Deleted ${postID}`)
-        res.redirect('/')
+        // res.redirect('/')
     } catch(err) {
         console.log(err)
     }
