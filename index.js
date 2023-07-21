@@ -9,12 +9,12 @@ import cors from 'cors';
 import path from 'path';
 
 mongoose.set('strictQuery',true)
-//mongoose.connect('mongodb+srv://kaustubsreekrishnan:V2yq3HekShhZENra@cluster0.ls3rywz.mongodb.net/?retryWrites=true&w=majority')
+mongoose.connect('mongodb+srv://kaustubsreekrishnan:V2yq3HekShhZENra@cluster0.ls3rywz.mongodb.net/?retryWrites=true&w=majority')
 
-mongoose.connect('mongodb://127.0.0.1:27017/react-blog', {
-	useNewUrlParser: true, 
-	useUnifiedTopology: true 
-}).then(() => console.log("Connected to MongoDB")).catch(console.error);
+// mongoose.connect('mongodb://127.0.0.1:27017/react-blog', {
+// 	useNewUrlParser: true, 
+// 	useUnifiedTopology: true 
+// }).then(() => console.log("Connected to MongoDB")).catch(console.error);
 
 const app = express()
 
@@ -56,6 +56,11 @@ app.get('/', async (req,res) => {
         console.log(err)
     }
 })
+
+// app.get('/images/:imageName', (req, res) => {
+//     const imageName = req.params.imageName;
+//     res.sendFile(path.join(__dirname, 'public', 'Images', imageName));
+// });
 
 // app.get('/posts',(req,res) => res.redirect('/'))
 
